@@ -1,32 +1,29 @@
-var img = document.createElement('img');
-img.setAttribute('src', '/imgs/title.png');
-img.addEventListener('load', function() {
-    var vibrant = new Vibrant(img);
-    var swatches = vibrant.swatches();
-    //for (var swatch in swatches) {
-        // if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
-        //     console.log(swatch, swatches[swatch].getHex());
-        // }
+$( document ).ready(function() {
+    imageNum = Math.floor(Math.random() * (19 - 1)) + 1;
+    //document.body.style.backgroundImage = `url('/imgs/${imageNum}.jpg')`;
 
-    $(".v").css("color", swatches['Vibrant'].getHex());
-    $(".lv").css("color", swatches['LightVibrant'].getHex());
-    $(".m").css("color", swatches['Muted'].getHex());
-    $(".lm").css("color", swatches['DarkMuted'].getHex());
-    //}
+    var img = document.getElementById('chance');
+    img.setAttribute('src', `/imgs/${imageNum}.jpg`);
+    img.addEventListener('load', function() {
+        var vibrant = new Vibrant(img, 64, 5);
+        var swatches = vibrant.swatches();
+        $(".v").css("color", swatches['Vibrant'].getHex());
+        if (swatches['LightVibrant']){
+                $(".lv").css("color", swatches['LightVibrant'].getHex());
+        }
+        $(".m").css("color", swatches['Muted'].getHex());
+        $(".lm").css("color", swatches['DarkMuted'].getHex());
+        //}
+        var ct = new ColorThief();
+        console.log(ct.getColor(img));
+        color = ct.getColor(img)
+        console.log(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+        var pal = ct.getPalette(img);
+        $('body').css("backgroundColor", `rgb(${pal[1][0]}, ${pal[1][1]}, ${pal[1][2]})`);
+        $('img').css('boxShadow', `0px 0px 30px rgb(${pal[0][0]}, ${pal[0][1]}, ${pal[0][2]})`);
+        $('.0').css("color", `rgb(${pal[0][0]}, ${pal[0][1]}, ${pal[0][2]})`);
+        $('.1').css("color", `rgb(${pal[1][0]}, ${pal[1][1]}, ${pal[1][2]})`);
+        $('.2').css("color", `rgb(${pal[2][0]}, ${pal[2][1]}, ${pal[2][2]})`);
+        $('.3').css("color", `rgb(${pal[3][0]}, ${pal[3][1]}, ${pal[3][2]})`);
+    });
 });
-
-
-$(document).ready(function () {
-    var ct = new ColorThief();
-    console.log(ct.getColor(img));
-    color = ct.getColor(img, 8)
-    console.log(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
-    document.body.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
-    var pal = ct.getPalette(img, 8);
-    console.log(pal);
-    console.log(pal[0]);
-    console.log(pal[0][0]);
-    $('.1').css("color", `rgb(${pal[0][2]}, ${pal[0][0]}, ${pal[0][1]})`);
-    $('.2').css("color", `rgb(${pal[2][2]}, ${pal[0][0]}, ${pal[2][1]})`);
-    $('.3').css("color", `rgb(${pal[3][0]}, ${pal[0][1]}, ${pal[3][2]})`);
-})
