@@ -1,27 +1,30 @@
 
 var ct = new ColorThief();
 var colors = colors || window.colors;
+var socket = io();
 
-$( document ).ready(function() {
-    getCurrentSong();
-});
+//////////////////////////////////////////////////
+//              FUNCTIONS
+//////////////////////////////////////////////////
 
+// Make API request to find out what song is currently playing
 var getCurrentSong = function() {
     $.ajax({
-        url: `/api/getTracks`
+        url: `/api/getCurrentTrack`
     }).done(function(data) {
         console.log(data);
         getColors(data);
     });
+};
 
-}
-
+// Create image element and finds useful colors to set the UI
 var getColors = function(track) {
     var img = document.getElementById('image')
+    var src = track.image ? `${track.image}?${new Date().getTime()}` : '/imgs/no-img.png';
     $('.v').html(track.name);
     $('.0').html(track.artist);
     console.log(image);
-    img.setAttribute('src', track.image + '?' + new Date().getTime());
+    img.setAttribute('src', src);
     img.setAttribute('crossOrigin', '*');
     img.addEventListener('load', function() {
         // Set variables and get colors from images
@@ -46,6 +49,8 @@ var getColors = function(track) {
     });
 }
 
+
+// Make API calls to hue lights to change the colors of each bulb
 var changeHueLights = function(light, r, g, b) {
     var xy = colors.rgbToCIE1931(r, g, b);
 
@@ -61,3 +66,25 @@ var changeHueLights = function(light, r, g, b) {
         }`
     });
 }
+
+var checkNowPlaying = function() {
+    $.ajax({
+        url: `/api/check`
+    }).done(function(data) {
+        console.log(data);
+        if (data.new) {
+            getColors(data);
+        }
+    });
+}
+
+$( document ).ready(function() {
+    // If the server detects a change in songs run function to change html and lights
+    socket.on('new track', function(track) {
+        console.log(track);
+        getColors(track);
+    });
+
+    getCurrentSong();
+    setInterval(checkNowPlaying, 1000);
+});

@@ -19,7 +19,24 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+ var server = http.createServer(app);
+ var io = require('socket.io')(server);
+ io.on('connection', function(socket){
+     console.log('connected');
+     socket.on('new track', function(nowPlaying) {
+         console.log('socket.io now emitting song: ' + nowPlaying.name);
+         io.emit('update nowplaying', nowPlaying);
+     });
+     socket.on('chat message', function(msg){
+         console.log(msg);
+      io.emit('chat message', msg);
+    });
+    setInterval(function() {
+        io.emit('chat message', 'malik is the greatest');
+    }, 1000);
+ });
+
+
 
 /**
  * Listen on provided port, on all network interfaces.
