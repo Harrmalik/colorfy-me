@@ -44,7 +44,8 @@ var getColors = function(track) {
 
         // Change Hue lights color
         changeHueLights(1, v[0], v[1], v[2]);
-        changeHueLights(2, pal[0][0], pal[0][1], pal[0][2]);
+        changeHueLights(2, v[0], v[1], v[2]);
+        //changeHueLights(2, pal[0][0], pal[0][1], pal[0][2]);
         changeHueLights(3, v[0], v[1], v[2]);
     });
 }
@@ -67,6 +68,17 @@ var changeHueLights = function(light, r, g, b) {
     });
 }
 
+var notifyMe = function(track) {
+    var options = {
+        body: track.artist,
+        icon: track.image,
+        tag: 'youtube',
+        data: 'pandora',
+        badge: 'spotify'
+    }
+    var n = new Notification(track.name ,options);
+}
+
 var checkNowPlaying = function() {
     $.ajax({
         url: `/api/check`
@@ -74,6 +86,7 @@ var checkNowPlaying = function() {
         console.log(data);
         if (data.new) {
             getColors(data);
+            notifyMe(data);
         }
     });
 }
@@ -87,4 +100,32 @@ $( document ).ready(function() {
 
     getCurrentSong();
     setInterval(checkNowPlaying, 1000);
+
+
 });
+
+// function notifyMe() {
+//   // Let's check if the browser supports notifications
+//   if (!("Notification" in window)) {
+//     alert("This browser does not support desktop notification");
+//   }
+//
+//   // Let's check whether notification permissions have already been granted
+//   else if (Notification.permission === "granted") {
+//     // If it's okay let's create a notification
+//     var notification = new Notification("Hi there!");
+//   }
+//
+//   // Otherwise, we need to ask the user for permission
+//   else if (Notification.permission !== 'denied') {
+//     Notification.requestPermission(function (permission) {
+//       // If the user accepts, let's create a notification
+//       if (permission === "granted") {
+//         var notification = new Notification("Hi there!");
+//       }
+//     });
+//   }
+//
+//   // At last, if the user has denied notifications, and you
+//   // want to be respectful there is no need to bother them any more.
+// }

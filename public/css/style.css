@@ -23,4 +23,6 @@ div {
   -webkit-transform: translateZ(0) !important;
   -webkit-backface-visibility: hidden; }
 
+  chrome.browserAction.setBadgeBackgroundColor({ color: "#00FF00"});
+
 /*# sourceMappingURL=style.css.map */
