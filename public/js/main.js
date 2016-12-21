@@ -23,7 +23,6 @@ var getColors = function(track) {
     var src = track.image ? `${track.image}?${new Date().getTime()}` : '/imgs/no-img.png';
     $('.v').html(track.name);
     $('.0').html(track.artist);
-    console.log(image);
     img.setAttribute('src', src);
     img.setAttribute('crossOrigin', '*');
     img.addEventListener('load', function() {
@@ -50,7 +49,6 @@ var getColors = function(track) {
     });
 }
 
-
 // Make API calls to hue lights to change the colors of each bulb
 var changeHueLights = function(light, r, g, b) {
     var xy = colors.rgbToCIE1931(r, g, b);
@@ -73,8 +71,7 @@ var notifyMe = function(track) {
         body: track.artist,
         icon: track.image,
         tag: 'youtube',
-        data: 'pandora',
-        badge: 'spotify'
+        data: 'pandora'
     }
     var n = new Notification(track.name ,options);
 }
@@ -94,7 +91,6 @@ var checkNowPlaying = function() {
 $( document ).ready(function() {
     // If the server detects a change in songs run function to change html and lights
     socket.on('new track', function(track) {
-        console.log(track);
         getColors(track);
     });
 
