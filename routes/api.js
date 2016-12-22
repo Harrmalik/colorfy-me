@@ -4,6 +4,17 @@ const request = require('request');
 var apiKey = process.env.lastfmApiKey;
 var nowPlaying = {};
 
+router.get('/getHueIP', function(req, res, next) {
+    request.get(`https://www.meethue.com/api/nupnp`, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+          body = JSON.parse(body);
+          res.send(body[0].internalipaddress);
+        } else {
+                res.send('error' + response);
+        }
+    });
+});
+
 router.get('/getCurrentTrack', function(req, res, next) {
     request.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=Harrmalik&api_key=${apiKey}&format=json&limit=1`, function (error, response, body) {
       if (!error && response.statusCode == 200) {

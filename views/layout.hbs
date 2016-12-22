@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/css/style.css' />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="/js/vibrant.js"></script>
-    <script src="/js/colors.js"></script>
-    <script src="/js/color-thief.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/main.js"></script>
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+    <head>
+        <title>{{title}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--                          STYLESHEETS                                -->
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css' />
+        <link rel='stylesheet' href='/css/style.css' />
+
+        <!--                          JAVASCRIPT                                -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script src="/js/vibrant.js"></script>
+        <script src="/js/colors.js"></script>
+        <script src="/js/color-thief.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/main.js"></script>
+    </head>
+
+    <body id="body">
+        {{{body}}}
+    </body>
 </html>
