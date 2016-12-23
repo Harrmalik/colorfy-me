@@ -13,11 +13,71 @@
         <script src="/js/vibrant.js"></script>
         <script src="/js/colors.js"></script>
         <script src="/js/color-thief.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
     </head>
 
     <body id="body">
+        <!-- Following Menu -->
+        <div class="ui large top fixed hidden menu">
+            <div class="ui container">
+                <a class="active item" href="/">Home</a>
+                <a class="item" href="/main">App</a>
+                <a class="item" href="/">Contact</a>
+                <div class="right menu">
+                    <div class="item">
+                        <a class="ui button" href="/">Log in</a>
+                    </div>
+                    <div class="item">
+                        <a class="ui primary button" href="/">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="ui vertical inverted sidebar menu">
+            <a class="active item" href="/">Home</a>
+            <a class="item" href="/main">App</a>
+            <a class="item" href="/">Contact</a>
+            <a class="item">Login</a>
+            <a class="item">Signup</a>
+        </div>
+
+        <div class="pusher">
+
+            <div class="ui container">
+              <div id="mainheader" class="ui inverted large secondary pointing menu">
+                <a class="toc item">
+                  <i class="sidebar icon"></i>
+                </a>
+                <a class="active item" href="/">Home</a>
+                <a class="item" href="/main">App</a>
+                <a class="item" href="/">Contact</a>
+                <!-- <div class="right item">
+                  <a class="item">Log in</a>
+                  <a class="item">Sign Up</a>
+                </div> -->
+              </div>
+            </div>
+        <!-- <nav class="ui blue secondary pointing menu">
+            <a class="active item" href="/">
+                Home
+            </a>
+            <a class="item" href="/">
+                Options
+            </a>
+            <a class="item" href="/">
+                Contact
+            </a>
+            <div class="right menu">
+                <a class="ui item">
+                    Logout
+                    <i class="circular inverted list layout icon"></i>
+                </a>
+            </div>
+        </nav> -->
+
         {{{body}}}
+        </div>
     </body>
 </html>

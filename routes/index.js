@@ -8,7 +8,12 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/main', function(req, res, next) {
-  res.render('main', { title: 'Colorfy Me' });
+  res.render('main', { title: 'Colorfy Me', layout: 'app-layout' });
+});
+
+/* GET home page. */
+router.get('/setup', function(req, res, next) {
+  res.render('partials/setup', { title: 'Colorfy Me', layout: 'app-layout' });
 });
 
 module.exports = router;
