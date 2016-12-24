@@ -3,10 +3,24 @@ body
     margin: 0
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
     height: 100%
-    background-size: cover
 
 #setup
     height: 100%
+
+.ui.grid>.column:not(.row)
+    width: auto
+    display: inherit
+
+.column.form2.setup, .column.form3.setup, .column.form4.setup, .connecting, .retry
+    display: none
+
+.setup.column
+    position: absolute
+    top: 50%
+    left: 50%
+    margin: -10em 0 0 -16em
+
+
 
 a
     color: #00B7FF

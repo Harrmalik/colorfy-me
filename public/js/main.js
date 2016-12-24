@@ -1,6 +1,6 @@
 var ct = new ColorThief();
 var colors = colors || window.colors;
-var hueIP = '';
+var hueIP = '192.168.0.7';
 
 //////////////////////////////////////////////////
 //              FUNCTIONS
@@ -63,32 +63,6 @@ var getColors = function(track) {
     });
 }
 
-var getHueIP = function() {
-    $.get( "/api/getHueIP", function( data ) {
-        hueIP = data;
-    });
-}
-
-var createHueUser = function() {
-    $.ajax({
-        url: `http://192.168.0.7/api/`,
-        type: 'POST',
-        data: `{
-        "devicetype": "colorfyme#web"
-        }`
-    }).success(function(data) {
-        if (data[0].error) {
-            console.log(data[0].error.description);
-        }
-        if (data[0].success) {
-            console.log(data[0].success.username);
-        }
-    }).fail(function(data) {
-        console.log('failure');
-        console.log(data);
-    });
-}
-
 // Make API calls to hue lights to change the colors of each bulb
 var changeHueLights = function(light, r, g, b) {
     var xy = colors.rgbToCIE1931(r, g, b);
@@ -127,9 +101,6 @@ var checkNowPlaying = function() {
 }
 
 $( document ).ready(function() {
-    getHueIP();
-    //createHueUser();
-
     getCurrentSong();
     setInterval(checkNowPlaying, 1000);
     //

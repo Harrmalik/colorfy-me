@@ -1,25 +1,83 @@
 <script src="/js/setup.js"></script>
-<div id="setup" class="ui middle aligned center aligned grid">
-  <div class="column setup">
-    <h2 class="ui black header">
-      <div class="content">
-        What is the username of your LastFM Account?
-      </div>
-    </h2>
-    <form class="ui large form">
-      <div class="ui stacked segment">
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="user icon"></i>
-            <input id="fmUser" type="text" name="text" placeholder="Last.FM username">
-          </div>
-        </div>
-        <div class="ui fluid large black submit button">Track</div>
-      </div>
-    </form>
+<div id="setup">
+    <div class="column setup form1">
+        <div class="ui raised segment">
+            <h2 class="ui header">
+                <div class="content">
+                    What is the username of your LastFM Account?
+                </div>
+            </h2>
 
-    <!-- <div class="ui message">
-      New to us? <a href="#">Sign Up</a>
-    </div> -->
-  </div>
+            <form class="ui large form">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input id="fmUser" type="text" name="text" placeholder="Last.FM username">
+                    </div>
+                </div>
+                <div id="fmBtn" class="ui fluid large black submit button">Track</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="column setup form2">
+        <div class="ui raised segment">
+            <h2 class="ui header">
+                <div class="content">
+                    Would you like to connect Hue Lights now?
+                </div>
+            </h2>
+
+            <form class="ui large form">
+                <div id="hueYesBtn" class="ui large black button">yes</div>
+                <div id="hueNoBtn" class="ui large black button">no</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="column setup form3">
+        <div class="ui raised segment">
+            <h2 class="ui header">
+                <div class="content">
+                    Is this your Hub's IP address?
+                </div>
+                <div class="sub header">
+
+                </div>
+            </h2>
+
+            <form class="ui large form">
+                <div id="ipYesBtn" class="ui large black button">yes</div>
+                <div id="ipNoBtn" class="ui large black button">no</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="column setup form4">
+        <div class="ui raised segment">
+            <h2 class="ui header">
+                <div class="content">
+                    Please click your Hue Hub within 30 Seconds, then click "CONNECT!"
+                </div>
+            </h2>
+
+            <form class="ui large form start">
+                <div id="hueStartBtn" class="ui large black button">Start</div>
+            </form>
+
+            <form class="ui large form connecting">
+                <div class="ui active progress" data-value="30" data-total="30" id="example5">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+
+                <div id="hueConnectBtn" class="ui large black button">CONNECT!</div>
+            </form>
+
+            <form class="ui large form retry">
+                <div id="hueRetryBtn" class="ui large black button">Retry</div>
+            </form>
+        </div>
+    </div>
 </div>
