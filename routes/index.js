@@ -6,12 +6,12 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Colorfy Me' });
 });
 
-/* GET home page. */
+/* GET main application page. */
 router.get('/main', function(req, res, next) {
   res.render('main', { title: 'Colorfy Me', layout: 'app-layout' });
 });
 
-/* GET home page. */
+/* GET setup page. */
 router.get('/setup', function(req, res, next) {
   res.render('partials/setup', { title: 'Colorfy Me', layout: 'app-layout' });
 });

@@ -8,7 +8,8 @@
     "web": "nodemon ./bin/www",
     "watch-sass": "sass --watch public/sass:public/css",
     "watch-webpack": "webpack --progress --colors --watch --watch-poll",
-    "start": "npm run watch-sass & \n npm run web"
+    "dev": "npm run watch-sass & \n npm run web",
+    "start": "node ./bin/www"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",

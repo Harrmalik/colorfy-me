@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 const request = require('request');
-var apiKey = process.env.lastfmApiKey;
-var nowPlaying = 'song';
-var fmUser = 'harrmalik';
+let apiKey = process.env.lastfmApiKey;
+let nowPlaying = 'song';
+let fmUser = 'harrmalik';
+let slsGetAlbumUrl = 'https://bgmv70svsg.execute-api.us-east-1.amazonaws.com/prod/album-covers-dev-getAlbum';
 
 router.get('/getHueIP', function(req, res, next) {
     request.get(`https://www.meethue.com/api/nupnp`, function (error, response, body) {
@@ -23,15 +24,18 @@ router.get('/getCurrentTrack', function(req, res, next) {
         request.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${fmUser}&api_key=${apiKey}&format=json&limit=1`, function (error, response, body) {
           if (!error && response.statusCode == 200) {
             nowPlaying = makeTrack(body);
+            console.log(`${slsGetAlbumUrl}?track=${nowPlaying.name}&artist=${nowPlaying.artist}`);
 
             if (nowPlaying.image) {
                 res.send(nowPlaying);
             } else {
-                request.get(`http://localhost:3001/${nowPlaying.name}/${nowPlaying.artist}`, function(error, response, body) {
+                request.get(`${slsGetAlbumUrl}?track=${nowPlaying.name}&artist=${nowPlaying.artist}`, function(error, response, body) {
                     if (body) {
                         body = JSON.parse(body);
-                        nowPlaying.image = body.image;
-                        nowPlaying.album = body.album;
+                        if (body.image) {
+                            nowPlaying.image = body.image;
+                            nowPlaying.album = body.album;
+                        }
                         res.send(nowPlaying);
                     } else {
                         res.send(nowPlaying);
@@ -55,7 +59,6 @@ router.get('/check', function(req, res, next) {
                 track = makeTrack(body);
                 console.log('now playing: ' + nowPlaying.name);
                 console.log('track: ' + track.name);
-                console.log('fmUser: ' + fmUser);
 
                 if (nowPlaying.name && nowPlaying.name !== track.name) {
                     console.log('change detected');
@@ -65,11 +68,13 @@ router.get('/check', function(req, res, next) {
                     if (track.image) {
                         res.send(track);
                     } else {
-                        request.get(`http://localhost:3001/${track.name}/${track.artist}`, function(error, response, body) {
+                        request.get(`${slsGetAlbumUrl}?track=${nowPlaying.name}&artist=${nowPlaying.artist}`, function(error, response, body) {
                             if (body) {
                                 body = JSON.parse(body);
-                                track.image = body.image;
-                                track.album = body.album;
+                                if (body.image) {
+                                    track.image = body.image;
+                                    track.album = body.album;
+                                }
                             }
                             res.send(track);
                         });
@@ -86,14 +91,13 @@ router.get('/check', function(req, res, next) {
 
 router.post('/setFMUser/:user', function(req,res,next) {
     fmUser = req.params.user;
-    console.log('now tracking user ' + fmUser);
 })
 
-var makeTrack = function(data) {
+let makeTrack = function(data) {
     data = JSON.parse(data);
     if (data.recenttracks) {
         data = data.recenttracks.track[0];
-        var image = data.image[Object.keys(data.image)[3]]
+        let image = data.image[Object.keys(data.image)[3]]
         track = {
             artist: data.artist[Object.keys(data.artist)[0]],
             name: data.name.replace(/\?/g, ''),
