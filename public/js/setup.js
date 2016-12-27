@@ -2,6 +2,7 @@ var hueIP = '';
 var colors = ['#03A9F4','#E91E63','#F44336','#009688','#4CAF50','#FF5722','#FFC107','#00BCD4','#E040FB'];
 var color = Math.floor(Math.random() * colors.length);
 var timeLeft = 30;
+let timer= '';
 
 var setFMUser = function(user) {
     $.ajax({
@@ -15,7 +16,7 @@ var startTimer = function() {
 
     function countdown() {
       if (timeLeft == 0) {
-        clearTimeout(timerId);
+        clearTimeout(timer);
         $('#example5').progress({
             percent: timeLeft,
             label: 'ratio',
@@ -35,13 +36,13 @@ var startTimer = function() {
       }
     }
     countdown();
-    setInterval(countdown, 1000);
+    timer = setInterval(countdown, 1000);
 }
 
 var getHueIP = function() {
     $.get( "/api/getHueIP", function( data ) {
         hueIP = data;
-        $('.sub.header').html(data);
+        $('#ipText').val(data);
     });
 }
 
@@ -84,8 +85,23 @@ $( document ).ready(function() {
 
     $( ".form" ).submit(function( event ) {
         event.preventDefault();
+        color = Math.floor(Math.random() * colors.length);
+        $('#body').css("backgroundColor", colors[color]);
+        $('.ui.header').css("color", colors[color]);
+        $('#hueYesBtn').css("backgroundColor", colors[color]);
+        $('.form1')
+          .transition({
+              animation  : 'fade down',
+              duration   : '1s',
+          })
+        ;
+        $('.form2')
+            .transition({
+                animation  : 'fade up',
+                duration   : '1s',
+            })
+        ;
         setFMUser($('#fmUser').val());
-        window.location.href = "http://localhost:3000/main";
     });
 
     $( "#fmBtn" ).on('click', function( event ) {
@@ -110,7 +126,7 @@ $( document ).ready(function() {
 
     $( "#hueYesBtn" ).on('click', function( event ) {
         color = Math.floor(Math.random() * colors.length);
-        $('#body').css("backgroundColor", colors[color]);
+        $('#body, #ipYesBtn').css("backgroundColor", colors[color]);
         $('.ui.header').css("color", colors[color]);
         $('.button.submit, #ipStartBtn').css("backgroundColor", colors[color]);
         $('.ui.progress .bar ').css("background", colors[color]);
@@ -133,6 +149,7 @@ $( document ).ready(function() {
         $('.ui.header').css("color", colors[color]);
         $('.button.submit, #hueStartBtn, #hueConnectBtn, #hueRetryBtn').css("backgroundColor", colors[color]);
         $('.ui.progress .bar ').css("background", colors[color]);
+        hueIP = $('#ipText').val();
 
         $('.form3')
           .transition({
@@ -146,6 +163,11 @@ $( document ).ready(function() {
             });
     });
 
+    $( "#ipNoBtn" ).on('click', function( event ) {
+        $('.field').removeClass('disabled');
+        $('#ipText').focus();
+    });
+
     $( "#hueStartBtn" ).on('click', function( event ) {
         $('.start')
           .transition({
@@ -157,7 +179,8 @@ $( document ).ready(function() {
                 animation  : 'fade up',
                 duration   : '500ms',
             });
-        startTimer()
+        $('#text').html('Please click your Hue Hub within 30 Seconds, then click "CONNECT!"');
+        startTimer();
     });
 
     $( "#hueRetryBtn" ).on('click', function( event ) {
@@ -171,12 +194,13 @@ $( document ).ready(function() {
                 animation  : 'fade',
                 duration   : '500ms',
             });
-        startTimer()
+        startTimer();
     });
 
 
     $( "#hueConnectBtn" ).on('click', function( event ) {
         $('.form3 .segment').addClass('loading');
+        clearTimeout(timer);
         createHueUser();
     });
 
