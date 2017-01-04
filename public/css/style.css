@@ -96,6 +96,17 @@ div {
 .column.setup {
   max-width: 450px; }
 
+.options.icon {
+  position: absolute;
+  right: 0;
+  margin: 0.5em; }
+
+#optionsBtn:hover {
+  border: 2px #03A9F4 solid; }
+
+#options-form {
+  top: 30%; }
+
 @media only screen and (max-width: 700px) {
   .ui.fixed.menu {
     display: none !important; }

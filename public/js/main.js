@@ -1,6 +1,6 @@
 var ct = new ColorThief();
 var colors = colors || window.colors;
-var hueIP = '192.168.0.7';
+var hueIP = '192.168.0.2';
 
 //////////////////////////////////////////////////
 //              FUNCTIONS
@@ -21,8 +21,8 @@ var getColors = function(track) {
     var img = document.getElementById('image')
     var src = track.image ? `${track.image}?${new Date().getTime()}` : '/imgs/no-img.png';
     $('.v').html(track.name);
-    $('.0').html(track.artist);
-    $('.dom').html(track.album);
+    $('.0').html(`${track.artist} - ${track.album}`);
+    // $('.dom').html(track.album);
     img.setAttribute('src', src);
     img.setAttribute('crossOrigin', '*');
     img.addEventListener('load', function() {
@@ -103,6 +103,10 @@ var checkNowPlaying = function() {
 $( document ).ready(function() {
     getCurrentSong();
     setInterval(checkNowPlaying, 1000);
+    $('#optionsBtn').on('click', function(){
+        console.log('clicked');
+        $('#options-form').toggle();
+    });
     //
     // // fix menu when passed
     // $('.masthead')
