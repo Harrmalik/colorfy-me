@@ -1,6 +1,4 @@
 var ct = new ColorThief();
-var colors = colors || window.colors;
-var hueIP = '192.168.0.2';
 
 //////////////////////////////////////////////////
 //              FUNCTIONS
@@ -63,23 +61,6 @@ var getColors = function(track) {
     });
 }
 
-// Make API calls to hue lights to change the colors of each bulb
-var changeHueLights = function(light, r, g, b) {
-    var xy = colors.rgbToCIE1931(r, g, b);
-//`http://192.168.0.7/api/tQdJ7GMOv2NTW9eTIzqjL2YbRbTKrrGyG2RY37MD/lights/${light}/state`
-    $.ajax({
-        url: `http://${hueIP}/api/M4dsHptOWsG4OrAEbVRWWZEYNCP6NhBId93AT5Vy/lights/${light}/state`,
-        type: 'PUT',
-        data: `{
-            "on": true,
-            "bri": 254,
-            "sat": 254,
-            "transitiontime": 30,
-            "xy": [${xy}]
-        }`
-    });
-}
-
 var notifyMe = function(track) {
     var options = {
         body: track.artist,
@@ -102,8 +83,16 @@ var checkNowPlaying = function() {
 
 $( document ).ready(function() {
     getCurrentSong();
+    checkForLights();
     setInterval(checkNowPlaying, 1000);
     $('#optionsBtn').on('click', function(){
+        _.forEach(activatedLights, function(lights) {
+            var form = $('.ui.form'),
+                newDiv = $("<div class='ui checkbox'></div>"),
+                input = $('<input type="checkbox" tabindex="0" class="hidden">'),
+                label = $(`<label>${lights.name}</label>`);
+            form.append(newDiv, [input, label]);
+        });
         console.log('clicked');
         $('#options-form').toggle();
     });

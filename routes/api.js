@@ -10,7 +10,8 @@ router.get('/getHueIP', function(req, res, next) {
     request.get(`https://www.meethue.com/api/nupnp`, function (error, response, body) {
       if (!error && response.statusCode == 200) {
           body = JSON.parse(body);
-          res.send(body[0].internalipaddress);
+          var ip = body[0] ? body[0].internalipaddress : '0.0.0.0';
+          res.send(ip);
         } else {
                 res.send('error' + response);
         }

@@ -1,4 +1,3 @@
-var hueIP = '';
 var colors = ['#03A9F4','#E91E63','#F44336','#009688','#4CAF50','#FF5722','#FFC107','#00BCD4','#E040FB'];
 var color = Math.floor(Math.random() * colors.length);
 var timeLeft = 30;
@@ -37,44 +36,6 @@ var startTimer = function() {
     }
     countdown();
     timer = setInterval(countdown, 1000);
-}
-
-var getHueIP = function() {
-    $.get( "/api/getHueIP", function( data ) {
-        hueIP = data;
-        $('#ipText').val(data);
-    });
-}
-
-var createHueUser = function() {
-    timeLeft = 30;
-    $.ajax({
-        url: `http://${hueIP}/api/`,
-        type: 'POST',
-        data: `{
-        "devicetype": "colorfyme#web"
-        }`
-    }).success(function(data) {
-        if (data[0].error) {
-            console.log(data[0].error.description);
-            $('.connecting')
-              .transition({
-                  animation  : 'fade',
-                  duration   : '500ms',
-              });
-            $('.retry')
-                .transition({
-                    animation  : 'fade',
-                    duration   : '500ms',
-                });
-        }
-        if (data[0].success) {
-            window.location.href = "http://localhost:3000/main";
-        }
-    }).fail(function(data) {
-        console.log('failure');
-        console.log(data);
-    });
 }
 
 $( document ).ready(function() {
