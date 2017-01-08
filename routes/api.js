@@ -58,10 +58,11 @@ router.get('/check', function(req, res, next) {
         request.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${fmUser}&api_key=${apiKey}&format=json&limit=1`, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 track = makeTrack(body);
+                console.log(track);
                 console.log('now playing: ' + nowPlaying.name);
                 console.log('track: ' + track.name);
 
-                if (nowPlaying.name && nowPlaying.name !== track.name) {
+                if (nowPlaying.name && nowPlaying.name !== track.name && track.nowPlaying == 'true') {
                     console.log('change detected');
                     nowPlaying = track;
                     track.new = true;
@@ -104,7 +105,8 @@ let makeTrack = function(data) {
             name: data.name.replace(/\?/g, ''),
             album: data.album[Object.keys(data.album)[0]],
             url: data.url,
-            image: image[Object.keys(image)[0]]
+            image: image[Object.keys(image)[0]],
+            nowPlaying: data["@attr"] ? data["@attr"].nowplaying : 'false'
         };
 
         return track;
