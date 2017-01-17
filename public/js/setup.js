@@ -167,6 +167,6 @@ $( document ).ready(function() {
 
 
     $( "#hueNoBtn" ).on('click', function( event ) {
-        window.location.href = "http://localhost:3000/main";
+        window.location.href = "/main";
     });
 });
