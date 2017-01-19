@@ -4,10 +4,11 @@ var hueUser = 'M4dsHptOWsG4OrAEbVRWWZEYNCP6NhBId93AT5Vy';
 var activatedLights = [];
 
 var getHueIP = function() {
-    $.get( "/api/getHueIP", function( data ) {
-        hueIP = data;
-        // TODO fix this to return data instead of set variable to data
-        $('#ipText').val(data);
+    $.get( "https://www.meethue.com/api/nupnp", function( body ) {
+        body = JSON.parse(body);
+        var ip = body[0] ? body[0].internalipaddress : '0.0.0.0';
+        hueIP = ip;
+        $('#ipText').val(ip);
     });
 }
 

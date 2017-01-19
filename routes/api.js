@@ -6,18 +6,6 @@ let nowPlaying = 'song';
 let fmUser = 'harrmalik';
 let slsGetAlbumUrl = 'https://bgmv70svsg.execute-api.us-east-1.amazonaws.com/prod/album-covers-dev-getAlbum';
 
-router.get('/getHueIP', function(req, res, next) {
-    request.get(`https://www.meethue.com/api/nupnp`, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-          body = JSON.parse(body);
-          var ip = body[0] ? body[0].internalipaddress : '0.0.0.0';
-          res.send(ip);
-        } else {
-                res.send('error' + response);
-        }
-    });
-});
-
 router.get('/getCurrentTrack', function(req, res, next) {
     if (!fmUser) {
         res.redirect('partials/setup', { title: 'Colorfy Me', layout: 'app-layout' });
