@@ -5,7 +5,6 @@ var activatedLights = [];
 
 var getHueIP = function() {
     $.get( "https://www.meethue.com/api/nupnp", function( body ) {
-        body = JSON.parse(body);
         var ip = body[0] ? body[0].internalipaddress : '0.0.0.0';
         hueIP = ip;
         $('#ipText').val(ip);
