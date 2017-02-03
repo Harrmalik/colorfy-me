@@ -1,5 +1,5 @@
 var colors = colors || window.colors;
-var hueIP = '192.168.0.2';
+var hueIP = '192.168.0.3';
 var hueUser = 'M4dsHptOWsG4OrAEbVRWWZEYNCP6NhBId93AT5Vy';
 var activatedLights = [];
 
@@ -34,7 +34,7 @@ var createHueUser = function() {
                 });
         }
         if (data[0].success) {
-            window.location.href = "http://localhost:3000/main";
+            window.location.href = "/main";
         }
     }).fail(function(data) {
         console.log('failure');
@@ -47,7 +47,9 @@ var checkForLights = function() {
         _.forEach(data, function(light, key) {
             activatedLights.push({
                 light: key,
-                name: light.name
+                name: light.name,
+                checked: light.state.on,
+                reachable: light.state.reachable
             })
         });
     });

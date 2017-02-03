@@ -6,7 +6,52 @@ let nowPlaying = 'song';
 let fmUser = 'harrmalik';
 let slsGetAlbumUrl = 'https://bgmv70svsg.execute-api.us-east-1.amazonaws.com/prod/album-covers-dev-getAlbum';
 
-router.get('/getCurrentTrack', function(req, res, next) {
+router.get('/user/:userID', (req, res, next) => {
+    res.json({
+        userID: 1,
+        isActive: true,
+        lastFM: 'harrmalik',
+        hueUser: 'M4dsHptOWsG4OrAEbVRWWZEYNCP6NhBId93AT5Vy',
+        hueIP: '192.168.0.3',
+        created: '2017-01-01 00:00:00',
+        loginMethods: [{
+            provider: 'local',
+            id: 'harrmalik@gmail.com',
+            created: '2017-01-01 00:00:00'
+        }],
+        settings: {
+            hueActive: true,
+            lastFM: true,
+            notifications: true,
+        },
+        hueLights: [{
+            id: 1,
+            name: '',
+            activated: true,
+            bri: 254,
+            sat: 254,
+            trans: 30
+        },
+        {
+            id: 2,
+            name: '',
+            activated: true,
+            bri: 254,
+            sat: 254,
+            trans: 30
+        },
+        {
+            id: 3,
+            name: '',
+            activated: true,
+            bri: 254,
+            sat: 254,
+            trans: 30
+        }]
+    });
+});
+
+router.get('/getCurrentTrack', (req, res, next) => {
     if (!fmUser) {
         res.redirect('partials/setup', { title: 'Colorfy Me', layout: 'app-layout' });
     } else {
@@ -39,7 +84,7 @@ router.get('/getCurrentTrack', function(req, res, next) {
     }
 });
 
-router.get('/check', function(req, res, next) {
+router.get('/check', (req, res, next) => {
     if (!fmUser) {
         res.render('partials/setup', { title: 'Colorfy Me', layout: 'app-layout' });
     } else {
@@ -79,7 +124,7 @@ router.get('/check', function(req, res, next) {
     }
 });
 
-router.post('/setFMUser/:user', function(req,res,next) {
+router.post('/setFMUser/:user', (req,res,next) => {
     fmUser = req.params.user;
 })
 
