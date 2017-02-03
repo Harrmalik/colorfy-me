@@ -26,7 +26,7 @@ router.get('/user/:userID', (req, res, next) => {
         },
         hueLights: [{
             id: 1,
-            name: '',
+            name: 'Living Room 1',
             activated: true,
             bri: 254,
             sat: 254,
@@ -34,7 +34,7 @@ router.get('/user/:userID', (req, res, next) => {
         },
         {
             id: 2,
-            name: '',
+            name: 'Living Room 2',
             activated: true,
             bri: 254,
             sat: 254,
@@ -42,8 +42,8 @@ router.get('/user/:userID', (req, res, next) => {
         },
         {
             id: 3,
-            name: '',
-            activated: true,
+            name: 'Malik Room 1',
+            activated: false,
             bri: 254,
             sat: 254,
             trans: 30

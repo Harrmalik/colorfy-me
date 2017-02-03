@@ -54,84 +54,38 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _Options = __webpack_require__(178);
+
+	var _Options2 = _interopRequireDefault(_Options);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Application = _react2.default.createClass({
 	    displayName: 'Application',
 	    getInitialState: function getInitialState() {
 	        return {
-	            search: '',
-	            data: []
+	            user: []
 	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        this.getUser();
+	    },
+	    getUser: function getUser() {
+	        var component = this;
+	        $.get('/api/user/1').done(function (user) {
+	            component.setState({ user: user });
+	        });
+	    },
+	    displayOptions: function displayOptions() {
+	        $('#options-form').toggle();
 	    },
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { id: 'options-form', className: 'ui modal small' },
-	                _react2.default.createElement('i', { className: 'close icon' }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'header' },
-	                    'Options'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'content' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'ui form' },
-	                        _react2.default.createElement(
-	                            'h3',
-	                            { className: 'ui header' },
-	                            'Hue Lights'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'ui blue button' },
-	                            'Connect Hue Lights'
-	                        ),
-	                        _react2.default.createElement(
-	                            'h3',
-	                            { className: 'ui header' },
-	                            'Account'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'ui checkbox' },
-	                            _react2.default.createElement('input', { type: 'checkbox', tabindex: '0', className: 'hidden' }),
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Checkbox'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'ui red button' },
-	                            'Delete Account'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'actions' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'ui black deny button' },
-	                        'Cancel'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'ui positive right labeled icon button' },
-	                        'Save',
-	                        _react2.default.createElement('i', { className: 'checkmark icon' })
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement('i', { id: 'optionsBtn', className: 'options icon big circular inverted' }),
+	            _react2.default.createElement(_Options2.default, {
+	                parent: this }),
+	            _react2.default.createElement('i', { id: 'optionsBtn', className: 'options icon big circular inverted', onClick: this.displayOptions }),
 	            _react2.default.createElement(
 	                'div',
 	                { id: 'div1', className: 'ui container' },
@@ -21579,6 +21533,132 @@
 
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Options = _react2.default.createClass({
+	    displayName: 'Options',
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+	    closeOptions: function closeOptions() {
+	        $('#options-form').toggle();
+	    },
+	    showHueOptions: function showHueOptions(light) {
+	        console.log(light);
+
+	        if (light) {
+	            return _react2.default.createElement(Light, {
+	                key: light.id,
+	                light: light });
+	        } else {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'ui blue button' },
+	                'Connect Hue Lights'
+	            );
+	        }
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { id: 'options-form', className: 'ui modal small' },
+	            _react2.default.createElement('i', { className: 'close icon', onClick: this.closeOptions }),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'header' },
+	                'Options'
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'content' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'ui form' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'ui header' },
+	                        'Hue Lights'
+	                    ),
+	                    _.map(this.props.parent.state.user.hueLights, this.showHueOptions),
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'ui header' },
+	                        'Account'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'ui checkbox' },
+	                        _react2.default.createElement('input', { type: 'checkbox', tabindex: '0', className: 'hidden' }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            'Checkbox'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'ui red button' },
+	                        'Delete Account'
+	                    )
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'actions' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'ui black deny button' },
+	                    'Cancel'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'ui positive right labeled icon button', onClick: this.closeOptions },
+	                    'Save',
+	                    _react2.default.createElement('i', { className: 'checkmark icon' })
+	                )
+	            )
+	        );
+	    }
+	});
+
+	var Light = _react2.default.createClass({
+	    displayName: 'Light',
+	    render: function render() {
+	        var light = this.props.light;
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('div', { className: 'ui checkbox' }),
+	            _react2.default.createElement('input', { type: 'checkbox', tabindex: '0', className: 'hidden', checked: light.activated }),
+	            _react2.default.createElement(
+	                'label',
+	                null,
+	                light.name
+	            )
+	        );
+	    }
+	});
+
+	exports.default = Options;
 
 /***/ }
 /******/ ]);

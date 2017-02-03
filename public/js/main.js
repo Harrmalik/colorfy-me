@@ -76,7 +76,7 @@ var checkNowPlaying = function() {
         console.log(data);
         if (data.new) {
             getColors(data);
-            notifyMe(data);
+            //notifyMe(data);
         }
     });
 }
@@ -85,18 +85,6 @@ $( document ).ready(function() {
     getCurrentSong();
     checkForLights();
     setInterval(checkNowPlaying, 1000);
-    $('#optionsBtn').on('click', function(){
-        _.forEach(activatedLights, function(light) {
-            var form = $('.ui.form'),
-                newDiv = $("<div class='ui checkbox'></div>"),
-                input = $(`<input type="checkbox" tabindex="0" class="hidden" checked="${light.checked}">`),
-                label = $(`<label>${light.name}</label>`);
-            form.append(newDiv, [input, label]);
-            console.log(light);
-        });
-        console.log('clicked');
-        $('#options-form').toggle();
-    });
     //
     // // fix menu when passed
     // $('.masthead')
