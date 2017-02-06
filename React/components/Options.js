@@ -11,8 +11,6 @@ let Options = React.createClass({
         $('#options-form').toggle();
     },
     showHueOptions(light) {
-        console.log(light);
-
         if (light) {
             return (
                 <Light

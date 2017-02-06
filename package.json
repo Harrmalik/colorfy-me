@@ -7,7 +7,7 @@
     "web": "nodemon ./bin/www",
     "watch-sass": "sass --watch public/sass:public/css",
     "watch-webpack": "webpack --progress --colors --watch --watch-poll",
-    "dev": "npm run watch-sass & \n npm run web & \n npm run watch-webpack",
+    "dev": "npm run watch-sass & \n npm run watch-webpack & \n npm run web ",
     "restart": "pm2 restart www",
     "start": "pm2 start ./bin/www"
   },

@@ -58,7 +58,7 @@ router.get('/getCurrentTrack', (req, res, next) => {
         request.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${fmUser}&api_key=${apiKey}&format=json&limit=1`, function (error, response, body) {
           if (!error && response.statusCode == 200) {
             nowPlaying = makeTrack(body);
-            console.log(`${slsGetAlbumUrl}?track=${nowPlaying.name}&artist=${nowPlaying.artist}`);
+            // console.log(`${slsGetAlbumUrl}?track=${nowPlaying.name}&artist=${nowPlaying.artist}`);
 
             if (nowPlaying.image) {
                 res.send(nowPlaying);
@@ -91,12 +91,12 @@ router.get('/check', (req, res, next) => {
         request.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${fmUser}&api_key=${apiKey}&format=json&limit=1`, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 track = makeTrack(body);
-                console.log(track);
-                console.log('now playing: ' + nowPlaying.name);
-                console.log('track: ' + track.name);
+                // console.log(track);
+                // console.log('now playing: ' + nowPlaying.name);
+                // console.log('track: ' + track.name);
 
                 if (nowPlaying.name && nowPlaying.name !== track.name && track.nowPlaying == 'true') {
-                    console.log('change detected');
+                    // console.log('change detected');
                     nowPlaying = track;
                     track.new = true;
 
