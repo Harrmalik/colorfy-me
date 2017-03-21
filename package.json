@@ -10,7 +10,7 @@
     "dev": "npm run watch-sass & \n npm run watch-webpack & \n npm run web ",
     "restart": "pm2 restart www",
     "live": "pm2 start ./bin/www --name colorfyme",
-    "start": "node start ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
