@@ -40,8 +40,9 @@ var Application = React.createClass({
         }).done(function(data) {
             console.log(data);
             if (data.new) {
-                component.getColors(data);
-                component.notifyMe(data);
+                component.setState({nowPlaying: data})
+                component.getColors(data)
+                component.notifyMe(data)
             }
         });
     },
@@ -95,17 +96,15 @@ var Application = React.createClass({
     displayOptions() {
         $('#options-form').toggle();
     },
-    notify() {
-        console.log('image changed');
-        // var options = {
-        //     body: track.artist,
-        //     icon: track.image
-        // }
-        // var n = new Notification(track.name ,options);
+    notifyMe() {
+        let track = this.state.nowPlaying
+        var options = {
+            body: track.artist,
+            icon: track.image
+        }
+        var n = new Notification(track.name ,options);
     },
     render() {
-        console.log('rendered');
-
         return (
             <div>
                 <Options
@@ -113,24 +112,14 @@ var Application = React.createClass({
 
                 <i id="optionsBtn" className="options icon big circular inverted" onClick={this.displayOptions}></i>
                 <div id="div1" className="ui container">
-                    <img id="image" src="" onChange={this.notify}></img>
-                    <h1 className='v'>Vibrant</h1>
-                    <h2 className='0'>Palette 0</h2>
+                    <img id="image" src=""></img>
+                    <h1 className='v'></h1>
+                    <h2 className='0'></h2>
                 </div>
             </div>
         )
     }
 })
-
-//////////////////////////////////////////////////
-//              FUNCTIONS
-//////////////////////////////////////////////////
-
-// Create image element and finds useful colors to set the UI
-
-
-
-
 
 // function notifyMe() {
 //   // Let's check if the browser supports notifications

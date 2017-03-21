@@ -15,7 +15,8 @@ let Options = React.createClass({
             return (
                 <Light
                     key={light.id}
-                    light={light} ></Light>
+                    light={light}
+                    parent={this.props.parent} ></Light>
             )
         } else {
             return (
@@ -66,12 +67,27 @@ let Options = React.createClass({
 })
 
 var Light = React.createClass({
+    getInitialState() {
+        return {
+            light: this.props.light,
+            checked: this.props.light.activated,
+            parent: this.props.parent
+        }
+    },
+    updateLight() {
+        //TODO: write to database
+        this.setState({checked: !this.state.checked})
+        this.state.parent.setState({})
+        //this.props.parent.setState({user.})
+    },
     render() {
-        let light = this.props.light
+        let light = this.state.light
+        let checked = this.state.checked
+        console.log(this.state.parent)
         return (
             <div>
                 <div className='ui checkbox'></div>
-                <input type="checkbox" tabindex="0" className="hidden" checked={light.activated}></input>
+                <input type="checkbox" tabindex="0" className="hidden" checked={checked} onChange={this.updateLight}></input>
                 <label>{light.name}</label>
             </div>
         )

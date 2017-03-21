@@ -1,5 +1,5 @@
 var colors = colors || window.colors;
-var hueIP = '192.168.0.3';
+var hueIP = '192.168.0.7';
 var hueUser = 'M4dsHptOWsG4OrAEbVRWWZEYNCP6NhBId93AT5Vy';
 var activatedLights = [];
 

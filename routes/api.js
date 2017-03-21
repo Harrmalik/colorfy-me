@@ -43,7 +43,7 @@ router.get('/user/:userID', (req, res, next) => {
         {
             id: 3,
             name: 'Malik Room 1',
-            activated: false,
+            activated:false,
             bri: 254,
             sat: 254,
             trans: 30

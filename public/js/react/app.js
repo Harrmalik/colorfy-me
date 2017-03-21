@@ -100,6 +100,7 @@
 	        }).done(function (data) {
 	            console.log(data);
 	            if (data.new) {
+	                component.setState({ nowPlaying: data });
 	                component.getColors(data);
 	                component.notifyMe(data);
 	            }
@@ -153,17 +154,15 @@
 	    displayOptions: function displayOptions() {
 	        $('#options-form').toggle();
 	    },
-	    notify: function notify() {
-	        console.log('image changed');
-	        // var options = {
-	        //     body: track.artist,
-	        //     icon: track.image
-	        // }
-	        // var n = new Notification(track.name ,options);
+	    notifyMe: function notifyMe() {
+	        var track = this.state.nowPlaying;
+	        var options = {
+	            body: track.artist,
+	            icon: track.image
+	        };
+	        var n = new Notification(track.name, options);
 	    },
 	    render: function render() {
-	        console.log('rendered');
-
 	        return _react2.default.createElement(
 	            'div',
 	            null,
@@ -173,28 +172,13 @@
 	            _react2.default.createElement(
 	                'div',
 	                { id: 'div1', className: 'ui container' },
-	                _react2.default.createElement('img', { id: 'image', src: '', onChange: this.notify }),
-	                _react2.default.createElement(
-	                    'h1',
-	                    { className: 'v' },
-	                    'Vibrant'
-	                ),
-	                _react2.default.createElement(
-	                    'h2',
-	                    { className: '0' },
-	                    'Palette 0'
-	                )
+	                _react2.default.createElement('img', { id: 'image', src: '' }),
+	                _react2.default.createElement('h1', { className: 'v' }),
+	                _react2.default.createElement('h2', { className: '0' })
 	            )
 	        );
 	    }
 	});
-
-	//////////////////////////////////////////////////
-	//              FUNCTIONS
-	//////////////////////////////////////////////////
-
-	// Create image element and finds useful colors to set the UI
-
 
 	// function notifyMe() {
 	//   // Let's check if the browser supports notifications
@@ -21684,7 +21668,8 @@
 	        if (light) {
 	            return _react2.default.createElement(Light, {
 	                key: light.id,
-	                light: light });
+	                light: light,
+	                parent: this.props.parent });
 	        } else {
 	            return _react2.default.createElement(
 	                'div',
@@ -21758,13 +21743,28 @@
 
 	var Light = _react2.default.createClass({
 	    displayName: 'Light',
+	    getInitialState: function getInitialState() {
+	        return {
+	            light: this.props.light,
+	            checked: this.props.light.activated,
+	            parent: this.props.parent
+	        };
+	    },
+	    updateLight: function updateLight() {
+	        //TODO: write to database
+	        this.setState({ checked: !this.state.checked });
+	        this.state.parent.setState({});
+	        //this.props.parent.setState({user.})
+	    },
 	    render: function render() {
-	        var light = this.props.light;
+	        var light = this.state.light;
+	        var checked = this.state.checked;
+	        console.log(this.state.parent);
 	        return _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement('div', { className: 'ui checkbox' }),
-	            _react2.default.createElement('input', { type: 'checkbox', tabindex: '0', className: 'hidden', checked: light.activated }),
+	            _react2.default.createElement('input', { type: 'checkbox', tabindex: '0', className: 'hidden', checked: checked, onChange: this.updateLight }),
 	            _react2.default.createElement(
 	                'label',
 	                null,
