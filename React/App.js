@@ -11,12 +11,14 @@ var Application = React.createClass({
         })
     },
     componentWillMount() {
-        this.getUser();
-        this.getCurrentSong();
-        checkForLights();
+        // this.getUser();
+        // this.getCurrentSong();
+        // checkForLights();
     },
     componentDidMount() {
-        setInterval(this.checkNowPlaying, 5000);
+        // setInterval(this.checkNowPlaying, 5000);
+        this.getColors();
+        console.log('yo')
     },
     getUser() {
         let component = this
@@ -50,9 +52,10 @@ var Application = React.createClass({
         let track = this.state.nowPlaying
         let lights = this.state.user.hueLights
         var img = document.getElementById('image')
-        var src = track.image ? `${track.image}?${new Date().getTime()}` : '/imgs/no-img.png';
+        console.log(track);
+        var src = track.image ? `${track.image}?${new Date().getTime()}` : 'https://i.scdn.co/image/ab67616d0000b273062bb63b7d23422bd4cc420e';
         $('.v').html(track.name);
-        $('.0').html(`${track.artist} - ${track.album}`);
+        $('.0').html(`Demi Lovato - No Promises (Single)`);
         // $('.dom').html(track.album);
         img.setAttribute('src', src);
         img.setAttribute('crossOrigin', '*');
@@ -112,9 +115,9 @@ var Application = React.createClass({
 
                 <i id="optionsBtn" className="options icon big circular inverted" onClick={this.displayOptions}></i>
                 <div id="div1" className="ui container">
-                    <img id="image" src=""></img>
-                    <h1 className='v'></h1>
-                    <h2 className='0'></h2>
+                    <img id="image" src="https://i.scdn.co/image/94105e271865c28853bfb7b44b38353a2fea45d6"></img>
+                    <h1 className='v'>No Promises</h1>
+                    <h2 className='0'>Demi Lovato</h2>
                 </div>
             </div>
         )
